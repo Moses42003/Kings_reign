@@ -57,16 +57,14 @@ function getCategoryIcon($category) {
     <title>Kings Reign - Your Premium Shopping Destination</title>
     <link rel="stylesheet" href="styles/modern_style.css">
     <link rel="shortcut icon" href="images/logos/logo-black.jpg" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Professional Header Styles */
         .main-header {
             background: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #e5e7eb;
         }
 
         .header-container {
@@ -100,13 +98,12 @@ function getCategoryIcon($category) {
 
         .search-input {
             width: 100%;
-            padding: 16px 24px;
+            padding: 15px 20px;
             border: 2px solid #e2e8f0;
-            border-radius: 30px;
+            border-radius: 25px;
             font-size: 16px;
             outline: none;
             transition: all 0.3s ease;
-            background: #f8fafc;
         }
 
         .search-input:focus {
@@ -116,16 +113,15 @@ function getCategoryIcon($category) {
 
         .search-btn {
             position: absolute;
-            right: 6px;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            right: 5px;
+            background: #2563eb;
             color: white;
             border: none;
-            padding: 14px 24px;
-            border-radius: 24px;
+            padding: 12px 20px;
+            border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
 
         .search-btn:hover {
@@ -209,15 +205,14 @@ function getCategoryIcon($category) {
             top: 100%;
             right: 0;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            min-width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            min-width: 250px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
             z-index: 1000;
-            border: 1px solid #f1f5f9;
         }
 
         .user-dropdown.show {
@@ -279,19 +274,18 @@ function getCategoryIcon($category) {
 
         .category-nav {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #f1f5f9;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .sidebar-title {
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 18px;
+            font-weight: 700;
             color: #111827;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid #e5e7eb;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
         }
 
         .category-list {
@@ -341,12 +335,11 @@ function getCategoryIcon($category) {
         .hero-banner {
             flex: 1;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 20px;
-            padding: 2.5rem;
+            border-radius: 16px;
+            padding: 2rem;
             color: white;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
         }
 
         .banner-content {
@@ -355,10 +348,9 @@ function getCategoryIcon($category) {
         }
 
         .banner-title {
-            font-size: 3rem;
-            font-weight: 900;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .banner-subtitle {
@@ -473,22 +465,10 @@ function getCategoryIcon($category) {
         }
 
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 800;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #111827;
             margin: 0;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            border-radius: 2px;
         }
 
         .section-actions {
@@ -522,18 +502,16 @@ function getCategoryIcon($category) {
 
         .product-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             position: relative;
-            border: 1px solid #f1f5f9;
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-            border-color: #e2e8f0;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .product-image {
@@ -545,15 +523,14 @@ function getCategoryIcon($category) {
 
         .discount-badge {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            top: 10px;
+            left: 10px;
+            background: #ef4444;
             color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 12px;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+            font-weight: 600;
         }
 
         .product-info {
@@ -576,13 +553,9 @@ function getCategoryIcon($category) {
         }
 
         .current-price {
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 18px;
+            font-weight: 700;
             color: #2563eb;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .original-price {
@@ -619,15 +592,12 @@ function getCategoryIcon($category) {
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: #2563eb;
             color: white;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            background: #1d4ed8;
         }
 
         .btn-secondary {
@@ -678,171 +648,6 @@ function getCategoryIcon($category) {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
-
-        /* Search Results Styles */
-        .search-results {
-            margin-bottom: 2rem;
-        }
-
-        .search-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        .search-info span {
-            font-weight: 500;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #e5e7eb;
-            background: white;
-            color: #374151;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .pagination-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .pagination-btn.active {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            border-color: #2563eb;
-        }
-
-        .category-link.active {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-        }
-
-        /* Professional Footer Styles */
-        .main-footer {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: white;
-            margin-top: 4rem;
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #f8fafc;
-            position: relative;
-        }
-
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 2px;
-        }
-
-        .footer-section p {
-            color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-section ul li a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .footer-section ul li a:hover {
-            color: #10b981;
-            transform: translateX(4px);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-
-        .social-links a:hover {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #475569;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-        }
     </style>
 </head>
 <body>
@@ -857,8 +662,8 @@ function getCategoryIcon($category) {
             <!-- Search Bar -->
             <div class="search-section">
                 <div class="search-container">
-                    <input type="search" class="search-input" id="searchInput" placeholder="Search products, brands and categories">
-                    <button class="search-btn" onclick="performSearch()">Search</button>
+                    <input type="search" class="search-input" placeholder="Search products, brands and categories">
+                    <button class="search-btn">Search</button>
                 </div>
             </div>
 
@@ -876,7 +681,7 @@ function getCategoryIcon($category) {
                                 <p><?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
                             </div>
                             <a href="update_account.php" class="dropdown-item">
-                                <i class="fas fa-user-edit"></i> My Account
+                                <i class="fas fa-user-edit"></i> Update Account
                             </a>
                             <a href="user_orders.php" class="dropdown-item">
                                 <i class="fas fa-shopping-bag"></i> My Orders
@@ -920,15 +725,9 @@ function getCategoryIcon($category) {
             <nav class="category-nav">
                 <h3 class="sidebar-title">Categories</h3>
                 <ul class="category-list">
-                    <li class="category-item">
-                        <a href="#" class="category-link active" onclick="filterByCategory('')">
-                            <i class="fas fa-th-large"></i>
-                            <span>All Categories</span>
-                        </a>
-                    </li>
                     <?php foreach($categories as $cat) { ?>
                         <li class="category-item">
-                            <a href="#" class="category-link" onclick="filterByCategory('<?php echo htmlspecialchars($cat['name']); ?>')">
+                            <a href="#<?php echo strtolower(str_replace(' ', '-', $cat['slug'])); ?>" class="category-link">
                                 <i class="fas fa-<?php echo getCategoryIcon($cat['name']); ?>"></i>
                                 <span><?php echo $cat['name']; ?></span>
                             </a>
@@ -940,25 +739,6 @@ function getCategoryIcon($category) {
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Search Results Section (Hidden by default) -->
-            <section id="searchResults" class="search-results" style="display: none;">
-                <div class="section-header">
-                    <h2 class="section-title">Search Results</h2>
-                    <div class="search-info">
-                        <span id="searchInfo"></span>
-                        <button class="btn btn-secondary" onclick="clearSearch()">
-                            <i class="fas fa-times"></i> Clear Search
-                        </button>
-                    </div>
-                </div>
-                <div id="searchProductsGrid" class="products-grid">
-                    <!-- Search results will be loaded here -->
-                </div>
-                <div id="searchPagination" class="pagination" style="display: none;">
-                    <!-- Pagination will be loaded here -->
-                </div>
-            </section>
-
             <!-- Hero Banner Section -->
             <section class="hero-section">
                 <div class="hero-banner">
@@ -999,7 +779,7 @@ function getCategoryIcon($category) {
             <!-- Flash Sales Section -->
             <section class="flash-sales">
                 <div class="section-header">
-                    <h2 class="section-title">Promotions Ending Soon</h2>
+                    <h2 class="section-title">Flash Sales</h2>
                     <div class="section-actions">
                         <div class="countdown">
                             <span>Time Left: </span>
@@ -1117,39 +897,39 @@ function getCategoryIcon($category) {
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3><i class="fas fa-crown"></i> About Kings Reign</h3>
-                <p>Your trusted online shopping destination for quality products at unbeatable prices. We bring you the best deals on electronics, fashion, and more.</p>
+                <h3>About Kings Reign</h3>
+                <p>Your trusted online shopping destination for quality products at unbeatable prices.</p>
             </div>
             <div class="footer-section">
-                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
-                    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="#help"><i class="fas fa-question-circle"></i> Help Center</a></li>
-                    <li><a href="#terms"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#terms">Terms & Conditions</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3><i class="fas fa-headset"></i> Customer Service</h3>
+                <h3>Customer Service</h3>
                 <ul>
-                    <li><a href="#shipping"><i class="fas fa-shipping-fast"></i> Shipping Info</a></li>
-                    <li><a href="#returns"><i class="fas fa-undo"></i> Returns</a></li>
-                    <li><a href="#faq"><i class="fas fa-question"></i> FAQ</a></li>
-                    <li><a href="#support"><i class="fas fa-life-ring"></i> Support</a></li>
+                    <li><a href="#shipping">Shipping Info</a></li>
+                    <li><a href="#returns">Returns</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#support">Support</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3><i class="fas fa-share-alt"></i> Connect With Us</h3>
+                <h3>Connect With Us</h3>
                 <div class="social-links">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Kings Reign. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #ef4444;"></i> for you</p>
+            <p>&copy; 2024 Kings Reign. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1182,16 +962,6 @@ function getCategoryIcon($category) {
         function addToCart(productId) {
             // Check if user is logged in
             <?php if(isset($_SESSION['user_id'])) { ?>
-                // Show loading state
-                Swal.fire({
-                    title: 'Adding to Cart...',
-                    text: 'Please wait',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-                
                 fetch('add_to_cart_unified.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -1199,31 +969,15 @@ function getCategoryIcon($category) {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    Swal.close();
                     if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Added to Cart!',
-                            text: 'Product has been added to your cart successfully.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        showAlert('Product added to cart!', 'success');
                         updateCartCount();
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: data.message || 'Failed to add product to cart.'
-                        });
+                        showAlert('Error: ' + data.message, 'error');
                     }
                 })
                 .catch(() => {
-                    Swal.close();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Network Error',
-                        text: 'Please check your connection and try again.'
-                    });
+                    showAlert('Network error.', 'error');
                 });
             <?php } else { ?>
                 // Redirect to login if not logged in
@@ -1243,23 +997,9 @@ function getCategoryIcon($category) {
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            const cartCount = data.cart.length || 0;
-                            document.querySelectorAll('.cart-count').forEach(element => {
-                                element.textContent = cartCount;
-                            });
+                            document.querySelector('.cart-count').textContent = data.cart.length;
                         }
-                    })
-                    .catch(() => {
-                        // If error, set count to 0
-                        document.querySelectorAll('.cart-count').forEach(element => {
-                            element.textContent = '0';
-                        });
                     });
-            <?php } else { ?>
-                // For non-logged in users, set count to 0
-                document.querySelectorAll('.cart-count').forEach(element => {
-                    element.textContent = '0';
-                });
             <?php } ?>
         }
 
@@ -1290,198 +1030,6 @@ function getCategoryIcon($category) {
                     dropdown.classList.remove('show');
                 }
             }
-        });
-
-        // Search and filter functionality
-        let currentSearch = '';
-        let currentCategory = '';
-        let currentPage = 1;
-
-        function performSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const searchTerm = searchInput.value.trim();
-            
-            if (searchTerm === '' && currentCategory === '') {
-                clearSearch();
-                return;
-            }
-            
-            currentSearch = searchTerm;
-            currentPage = 1;
-            loadSearchResults();
-        }
-
-        function filterByCategory(category) {
-            currentCategory = category;
-            currentSearch = '';
-            currentPage = 1;
-            
-            // Update active category link
-            document.querySelectorAll('.category-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Clear search input
-            document.getElementById('searchInput').value = '';
-            
-            loadSearchResults();
-        }
-
-        function loadSearchResults() {
-            const searchResults = document.getElementById('searchResults');
-            const searchProductsGrid = document.getElementById('searchProductsGrid');
-            const searchInfo = document.getElementById('searchInfo');
-            const searchPagination = document.getElementById('searchPagination');
-            
-            // Show loading
-            searchProductsGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6b7280;">Loading...</div>';
-            searchResults.style.display = 'block';
-            
-            // Hide other sections
-            document.querySelectorAll('.hero-section, .flash-sales, .featured-products, .all-products').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Build query parameters
-            const params = new URLSearchParams();
-            if (currentSearch) params.append('search', currentSearch);
-            if (currentCategory) params.append('category', currentCategory);
-            if (currentPage > 1) params.append('page', currentPage);
-            
-            fetch('search_products.php?' + params.toString())
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        displaySearchResults(data);
-                    } else {
-                        searchProductsGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6b7280;">Error loading results</div>';
-                    }
-                })
-                .catch(() => {
-                    searchProductsGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6b7280;">Network error</div>';
-                });
-        }
-
-        function displaySearchResults(data) {
-            const searchProductsGrid = document.getElementById('searchProductsGrid');
-            const searchInfo = document.getElementById('searchInfo');
-            const searchPagination = document.getElementById('searchPagination');
-            
-            // Update search info
-            let infoText = `Found ${data.total_products} product${data.total_products !== 1 ? 's' : ''}`;
-            if (data.search) infoText += ` for "${data.search}"`;
-            if (data.category) infoText += ` in ${data.category}`;
-            searchInfo.textContent = infoText;
-            
-            if (data.products.length === 0) {
-                searchProductsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
-                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: #d1d5db;"></i>
-                        <h3>No products found</h3>
-                        <p>Try adjusting your search terms or browse all categories</p>
-                    </div>
-                `;
-                searchPagination.style.display = 'none';
-                return;
-            }
-            
-            // Display products
-            let productsHtml = '';
-            data.products.forEach(product => {
-                const discountBadge = product.discount_percentage > 0 ? 
-                    `<span class="discount-badge">-${product.discount_percentage}%</span>` : '';
-                
-                const originalPrice = product.original_price > product.price ? 
-                    `<span class="original-price">GH ₵${parseFloat(product.original_price).toFixed(2)}</span>` : '';
-                
-                productsHtml += `
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="${product.main_image || 'images/placeholder.jpg'}" alt="${product.name}">
-                            ${discountBadge}
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">${product.name}</h3>
-                            <div class="product-price">
-                                <span class="current-price">GH ₵${parseFloat(product.price).toFixed(2)}</span>
-                                ${originalPrice}
-                            </div>
-                            <p class="stock-info">${product.stock} items left</p>
-                            <div class="product-actions">
-                                <button class="btn btn-primary" onclick="addToCart(${product.id})">
-                                    <i class="fas fa-cart-plus"></i> Add to Cart
-                                </button>
-                                <button class="btn btn-secondary" onclick="viewProduct(${product.id})">
-                                    <i class="fas fa-eye"></i> View
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            searchProductsGrid.innerHTML = productsHtml;
-            
-            // Display pagination
-            if (data.total_pages > 1) {
-                let paginationHtml = '';
-                
-                if (data.current_page > 1) {
-                    paginationHtml += `<a href="#" class="pagination-btn" onclick="changePage(${data.current_page - 1})">Previous</a>`;
-                }
-                
-                for (let i = Math.max(1, data.current_page - 2); i <= Math.min(data.total_pages, data.current_page + 2); i++) {
-                    paginationHtml += `<a href="#" class="pagination-btn ${i === data.current_page ? 'active' : ''}" onclick="changePage(${i})">${i}</a>`;
-                }
-                
-                if (data.current_page < data.total_pages) {
-                    paginationHtml += `<a href="#" class="pagination-btn" onclick="changePage(${data.current_page + 1})">Next</a>`;
-                }
-                
-                searchPagination.innerHTML = paginationHtml;
-                searchPagination.style.display = 'flex';
-            } else {
-                searchPagination.style.display = 'none';
-            }
-        }
-
-        function changePage(page) {
-            currentPage = page;
-            loadSearchResults();
-        }
-
-        function clearSearch() {
-            currentSearch = '';
-            currentCategory = '';
-            currentPage = 1;
-            
-            // Clear search input
-            document.getElementById('searchInput').value = '';
-            
-            // Remove active class from category links
-            document.querySelectorAll('.category-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelector('.category-link').classList.add('active'); // Set "All Categories" as active
-            
-            // Hide search results
-            document.getElementById('searchResults').style.display = 'none';
-            
-            // Show all sections
-            document.querySelectorAll('.hero-section, .flash-sales, .featured-products, .all-products').forEach(section => {
-                section.style.display = 'block';
-            });
-        }
-
-        // Handle Enter key in search input
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
         });
 
         // Initialize
