@@ -443,6 +443,19 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 
+                
+                <div class="form-group full-width">
+                    <label class="form-label" for="cpassword">Phone Number</label>
+                    <input type="tel" id="pnum" name="pnum" class="form-input" 
+                    placeholder="Enter Phone Number" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label class="form-label" for="cpassword">Address</label>
+                    <input type="address" id="address" name="address" class="form-input" 
+                    placeholder="Enter Address" required>
+                </div>
+
                 <div class="form-group full-width">
                     <label class="form-label" for="email">Email Address</label>
                     <input type="email" id="email" name="email" class="form-input" 
@@ -473,18 +486,6 @@ if (isset($_POST['submit'])) {
                     <button type="button" class="password-toggle" onclick="togglePassword('cpassword')">
                         <i class="fas fa-eye"></i>
                     </button>
-                </div>
-
-                <div class="form-group full-width">
-                    <label class="form-label" for="cpassword">Phone Number</label>
-                    <input type="tel" id="pnum" name="pnum" class="form-input" 
-                    placeholder="Enter Phone Number" required>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label class="form-label" for="cpassword">Address</label>
-                    <input type="address" id="address" name="address" class="form-input" 
-                    placeholder="Enter Address" required>
                 </div>
 
                 <div class="terms-checkbox">
