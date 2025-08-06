@@ -21,9 +21,11 @@ if (isset($_POST['submit'])) {
     $email = $conn->real_escape_string($_POST['email']);
     $password = $_POST['password'];
     $cpassword = $_POST['cpassword'];
+    $pnum = $_POST['pnum'];
+    $address = $_POST['address'];
     
     // Validation
-    if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($cpassword)) {
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($cpassword) || empty($pnum) || empty($address)) {
         $message = 'Please fill in all fields.';
         $messageType = 'error';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -45,7 +47,7 @@ if (isset($_POST['submit'])) {
             $messageType = 'error';
         } else {
             $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (fname, lname, email, passwd) VALUES ('$firstname', '$lastname', '$email', '$hashedPass')";
+            $sql = "INSERT INTO users (fname, lname, email, passwd, phone, address) VALUES ('$firstname', '$lastname', '$email', '$hashedPass', '$pnum', '$address')";
             
             if($conn->query($sql) === TRUE){
                 header("Location: login.php?signup=success");
@@ -472,7 +474,19 @@ if (isset($_POST['submit'])) {
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="cpassword">Phone Number</label>
+                    <input type="tel" id="pnum" name="pnum" class="form-input" 
+                    placeholder="Enter Phone Number" required>
+                </div>
                 
+                <div class="form-group full-width">
+                    <label class="form-label" for="cpassword">Address</label>
+                    <input type="address" id="address" name="address" class="form-input" 
+                    placeholder="Enter Address" required>
+                </div>
+
                 <div class="terms-checkbox">
                     <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms">
