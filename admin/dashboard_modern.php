@@ -19,29 +19,6 @@ $recentOrders = mysqli_query($conn, "SELECT o.*, u.fname, u.lname, u.email FROM 
 
 // Get recent messages
 $recentMessages = mysqli_query($conn, "SELECT * FROM contact_messages ORDER BY created_at DESC LIMIT 5");
-?>
-
-<?php
-// Modern Admin Dashboard
-session_start();
-if (!isset($_SESSION['admin_id'])) {
-    header('Location: ../login.php');
-    exit();
-}
-
-include('../db.php');
-
-// Get dashboard statistics
-$totalUsers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM users"))['count'];
-$totalProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM products"))['count'];
-$totalOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM orders"))['count'];
-$totalMessages = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM contact_messages"))['count'];
-
-// Get recent orders
-$recentOrders = mysqli_query($conn, "SELECT o.*, u.fname, u.lname, u.email FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC LIMIT 5");
-
-// Get recent messages
-$recentMessages = mysqli_query($conn, "SELECT * FROM contact_messages ORDER BY created_at DESC LIMIT 5");
 
 // Set page variables for layout
 $page_title = 'Dashboard';
