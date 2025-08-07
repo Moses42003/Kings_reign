@@ -1,6 +1,11 @@
 <?php
 include('db.php');
 session_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit();
@@ -439,6 +444,9 @@ function getMessageStatus($status) {
             }
         }
     </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="user-dashboard">
@@ -569,6 +577,12 @@ function getMessageStatus($status) {
                                     </div>
                                 </div>
                             <?php endwhile; ?>
+                            <div class="text-center mt-3">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+                                    <i class="fas fa-envelope"></i> Send Another Message
+                                </button>
+                            </div>
+
                         </div>
 
                         <!-- Pagination -->
@@ -594,26 +608,109 @@ function getMessageStatus($status) {
                             </div>
                         <?php endif; ?>
                     <?php else: ?>
+
                         <div class="no-messages">
                             <i class="fas fa-envelope"></i>
                             <h3>No Messages Yet</h3>
                             <p>You haven't sent any messages to customer support yet. Contact us if you need help!</p>
-                            <a href="contact_message.php" class="btn btn-primary">
-                                <i class="fas fa-envelope"></i> Send Message
-                            </a>
                         </div>
+                        <div class="text-center mt-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+                            <i class="fas fa-envelope"></i> Send Message
+                        </button>
+                        </div>
+
                     <?php endif; ?>
+
+                    <!-- Contact Modal -->
+                    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                            <form id="contactForm">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="contactModalLabel">Contact Customer Support</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                
+                                <div class="modal-body">
+                                <div id="status" class="mb-3"></div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" name="name" id="name" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Your Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" name="subject" id="subject" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" name="message" id="message" rows="5" required></textarea>
+                                </div>
+                                </div>
+                                
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- View Message Modal -->
+                    <div class="modal fade" id="viewMessageModal" tabindex="-1" aria-labelledby="viewMessageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewMessageModalLabel">Message Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            
+                            <div class="modal-body">
+                                <div id="viewMessageContent">
+                                <div><strong>From:</strong> <span id="viewMessageName"></span> &lt;<span id="viewMessageEmail"></span>&gt;</div>
+                                <div><strong>Subject:</strong> <span id="viewMessageSubject"></span></div>
+                                <div><strong>Date:</strong> <span id="viewMessageDate"></span></div>
+                                <hr>
+                                <div id="viewMessageBody" style="white-space: pre-line;"></div>
+                                </div>
+                                <div id="viewMessageLoading" class="text-center my-4 d-none">
+                                <div class="spinner-border text-primary"></div>
+                                </div>
+                                <div id="viewMessageError" class="alert alert-danger d-none">
+                                Failed to load message.
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </main>
             </div>
         </div>
     </div>
 
-    <script>
-        function viewMessage(messageId) {
-            // Implement message details modal or redirect to message details page
-            alert('Message details functionality coming soon!');
-        }
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
         function markAsRead(messageId) {
             if(confirm('Mark this message as read?')) {
                 // Implement mark as read functionality
@@ -621,5 +718,91 @@ function getMessageStatus($status) {
             }
         }
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contactForm');
+            const status = document.getElementById('status');
+
+            form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            const response = await fetch('contact_message.php', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                status.innerHTML = `<div class="alert alert-success">Message sent successfully.</div>`;
+                form.reset();
+                setTimeout(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+                    modal.hide();
+                    location.reload();
+                }, 1500);
+            } else {
+                status.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+            }
+            });
+        });
+    </script>
+
+
+
+
+        <script>
+            function viewMessage(messageId) {
+            const modal = new bootstrap.Modal(document.getElementById('viewMessageModal'));
+            const loading = document.getElementById('viewMessageLoading');
+            const error = document.getElementById('viewMessageError');
+            const content = document.getElementById('viewMessageContent');
+
+            // Clear previous content
+            document.getElementById('viewMessageName').textContent = '';
+            document.getElementById('viewMessageEmail').textContent = '';
+            document.getElementById('viewMessageSubject').textContent = '';
+            document.getElementById('viewMessageDate').textContent = '';
+            document.getElementById('viewMessageBody').textContent = '';
+
+            // Show modal
+            modal.show();
+            loading.classList.remove('d-none');
+            error.classList.add('d-none');
+            content.classList.add('d-none');
+
+            fetch(`get_message.php?id=${messageId}`)
+                .then(response => response.json())
+                .then(data => {
+                if (!data.success) throw new Error();
+
+                document.getElementById('viewMessageName').textContent = data.message.name;
+                document.getElementById('viewMessageEmail').textContent = data.message.email;
+                document.getElementById('viewMessageSubject').textContent = data.message.subject;
+                document.getElementById('viewMessageDate').textContent = data.message.created_at;
+                document.getElementById('viewMessageBody').textContent = data.message.message;
+
+                loading.classList.add('d-none');
+                content.classList.remove('d-none');
+                })
+                .catch(() => {
+                loading.classList.add('d-none');
+                error.classList.remove('d-none');
+                });
+            }
+        </script>
+
+
+
+
+
 </body>
 </html>

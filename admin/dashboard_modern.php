@@ -23,13 +23,11 @@ $recentMessages = mysqli_query($conn, "SELECT * FROM contact_messages ORDER BY c
 
 <?php
 // Modern Admin Dashboard
-session_start();
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ../login.php');
     exit();
 }
 
-include('../db.php');
 
 // Get dashboard statistics
 $totalUsers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM users"))['count'];
@@ -179,7 +177,7 @@ ob_start();
                                 <div class="message-card">
                                     <div class="message-header">
                                         <h4><?php echo htmlspecialchars($message['name']); ?></h4>
-                                        <span class="message-date"><?php echo date('M j, Y', strtotime($message['created_at'])); ?></span>
+                                        <span class="message-date"><?php echo date('M j, Y, h:i:s', strtotime($message['created_at'])); ?></span>
                                     </div>
                                     <p class="message-email"><?php echo htmlspecialchars($message['email']); ?></p>
                                     <p class="message-content"><?php echo htmlspecialchars(substr($message['message'], 0, 100)) . (strlen($message['message']) > 100 ? '...' : ''); ?></p>
