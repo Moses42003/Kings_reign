@@ -17,7 +17,7 @@ if (!$message_id) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT name, email, subject, message, created_at FROM contact_messages WHERE id = ? AND user_id = ?");
+$stmt = $conn->prepare("SELECT name, email, subject, message, created_at, reply, replied_at FROM contact_messages WHERE id = ? AND user_id = ?");
 $stmt->bind_param('ii', $message_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();

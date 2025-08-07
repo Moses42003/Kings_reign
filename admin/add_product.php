@@ -9,6 +9,12 @@ if (!isset($_SESSION['admin_id'])) {
 include('../db.php');
 include('get_categories.php'); // Include categories helper
 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 $message = '';
 $messageType = '';
 
@@ -113,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "INSERT INTO products (name, price, original_price, description, stock, category_id, subcategory, brand, discount_percentage, is_featured, is_flash_sale, flash_sale_end) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sddssisssiiss', $name, $price, $original_price, $description, $stock, $category_id, $subcategory, $brand, $discount_percentage, $is_featured, $is_flash_sale, $flash_sale_end);
+        $stmt->bind_param('sddssissiiis', $name, $price, $original_price, $description, $stock, $category_id, $subcategory, $brand, $discount_percentage, $is_featured, $is_flash_sale, $flash_sale_end);
         
         if ($stmt->execute()) {
             $product_id = $conn->insert_id;

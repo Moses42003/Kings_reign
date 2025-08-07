@@ -692,6 +692,28 @@ function getMessageStatus($status) {
                                 </div>
                             </div>
 
+                            <hr>
+                                <div id="replySection" class="mt-3 d-none">
+                                    <div><strong>Your Reply:</strong></div>
+                                    <div id="viewMessageReply" style="white-space: pre-line;"></div>
+                                    <div><small><strong>Replied At:</strong> <span id="viewMessageRepliedAt"></span></small></div>
+                                </div>
+
+                                <!-- Optional: Reply form if not replied yet -->
+                                <!-- Optional: Reply form if not replied yet -->
+                                <form id="replyForm" class="mt-4 d-none" hidden="true">
+                                    <div class="mb-3">
+                                        <label for="replyText" class="form-label">Write a reply</label>
+                                        <textarea class="form-control" id="replyText" rows="4" required></textarea>
+                                    </div>
+                                    <input type="hidden" id="replyMessageId">
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-success">Send Reply</button>
+                                    </div>
+                                </form>
+
+
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
@@ -759,8 +781,8 @@ function getMessageStatus($status) {
 
 
 
-        <script>
-            function viewMessage(messageId) {
+    <script>
+        function viewMessage(messageId) {
             const modal = new bootstrap.Modal(document.getElementById('viewMessageModal'));
             const loading = document.getElementById('viewMessageLoading');
             const error = document.getElementById('viewMessageError');
@@ -772,6 +794,14 @@ function getMessageStatus($status) {
             document.getElementById('viewMessageSubject').textContent = '';
             document.getElementById('viewMessageDate').textContent = '';
             document.getElementById('viewMessageBody').textContent = '';
+            document.getElementById('viewMessageReply').textContent = '';
+            document.getElementById('viewMessageRepliedAt').textContent = '';
+            document.getElementById('replyText').value = '';
+            document.getElementById('replyMessageId').value = '';
+
+            // Reset sections
+            document.getElementById('replySection').classList.add('d-none');
+            document.getElementById('replyForm').classList.add('d-none');
 
             // Show modal
             modal.show();
@@ -779,26 +809,44 @@ function getMessageStatus($status) {
             error.classList.add('d-none');
             content.classList.add('d-none');
 
+            // Fetch the message details
             fetch(`get_message.php?id=${messageId}`)
                 .then(response => response.json())
                 .then(data => {
-                if (!data.success) throw new Error();
+                    if (!data.success || !data.message) throw new Error('Invalid response');
 
-                document.getElementById('viewMessageName').textContent = data.message.name;
-                document.getElementById('viewMessageEmail').textContent = data.message.email;
-                document.getElementById('viewMessageSubject').textContent = data.message.subject;
-                document.getElementById('viewMessageDate').textContent = data.message.created_at;
-                document.getElementById('viewMessageBody').textContent = data.message.message;
+                    const msg = data.message;
 
-                loading.classList.add('d-none');
-                content.classList.remove('d-none');
+                    // Populate modal content
+                    document.getElementById('viewMessageName').textContent = msg.name;
+                    document.getElementById('viewMessageEmail').textContent = msg.email;
+                    document.getElementById('viewMessageSubject').textContent = msg.subject;
+                    document.getElementById('viewMessageDate').textContent = msg.created_at;
+                    document.getElementById('viewMessageBody').textContent = msg.message;
+
+                    if (msg.reply) {
+                        // Show existing reply
+                        document.getElementById('viewMessageReply').textContent = msg.reply;
+                        document.getElementById('viewMessageRepliedAt').textContent = msg.replied_at;
+                        document.getElementById('replySection').classList.remove('d-none');
+                        document.getElementById('replyForm').classList.add('d-none');
+                    } else {
+                        // Show reply form
+                        document.getElementById('replyMessageId').value = messageId;
+                        document.getElementById('replyForm').classList.remove('d-none');
+                        document.getElementById('replySection').classList.add('d-none');
+                    }
+
+                    loading.classList.add('d-none');
+                    content.classList.remove('d-none');
                 })
                 .catch(() => {
-                loading.classList.add('d-none');
-                error.classList.remove('d-none');
+                    loading.classList.add('d-none');
+                    error.classList.remove('d-none');
                 });
-            }
-        </script>
+        }
+    </script>
+
 
 
 
