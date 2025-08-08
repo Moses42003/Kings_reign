@@ -22,8 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = $conn->real_escape_string($_POST['address']);
     $email = $conn->real_escape_string($_POST['email']);
     $phone = $conn->real_escape_string($_POST['phone']);
-    
-    $query = "UPDATE users SET fname='$fname', lname='$lname', address='$address', email='$email', phone='$phone' WHERE id='$user_id'";
+    $pass = $conn->real_escape_string($_POST['npass']);
+    $hPass = password_hash($pass, PASSWORD_DEFAULT);
+
+
+    $query = "UPDATE users SET fname='$fname', lname='$lname', address='$address', email='$email', phone='$phone', passwd='$hPass' WHERE id='$user_id'";
     if ($conn->query($query)) {
         $_SESSION['user_name'] = $fname . ' ' . $lname;
         $_SESSION['user_email'] = $email;
@@ -470,6 +473,17 @@ $cart_count = $conn->query("SELECT COUNT(*) as count FROM cart WHERE user_id = '
                                     <label class="form-label" for="lname">Last Name</label>
                                     <input type="text" id="lname" name="lname" class="form-input" 
                                            value="<?php echo htmlspecialchars($user['lname']); ?>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3><i class="fas fa-lock"></i> Password Update</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="npass">New Password</label>
+                                    <input type="password" id="npass" name="npass" class="form-input" 
+                                    placeholder="Enter New Password">
                                 </div>
                             </div>
                         </div>

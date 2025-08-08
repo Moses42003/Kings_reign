@@ -584,7 +584,7 @@ function formatDate($date) {
                                             <div class="detail-value"><?php echo ucfirst($order['payment_method'] ?? 'Cash on Delivery'); ?></div>
                                         </div>
                                         <div class="detail-item">
-                                            <div class="detail-label">Shipping Address</div>
+                                            <div class="detail-label">Shipping Address </div>
                                             <div class="detail-value"><?php echo htmlspecialchars($order['shipping_address']); ?></div>
                                         </div>
                                     </div>
@@ -680,7 +680,7 @@ function formatDate($date) {
                         <div style="text-align:left;">
                             <p><strong>Status:</strong> ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
                             <p><strong>Placed on:</strong> ${order.created_at}</p>
-                            <p><strong>Shipping Address:</strong> ${order.shipping_address}</p>
+                            <p><strong>Shipping Address( You can change this in your account settings):</strong> <br/> ${order.shipping_address}</p>
                             <p><strong>Payment Method:</strong> ${order.payment_method}</p>
                             <hr/>
                             <table style="width:100%;border-collapse:collapse;font-size:0.98em;">
@@ -716,11 +716,46 @@ function formatDate($date) {
         }
 
         function cancelOrder(orderId) {
-            if(confirm('Are you sure you want to cancel this order?')) {
-                // Implement order cancellation
-                alert('Order cancellation functionality coming soon!');
-            }
+            Swal.fire({
+                title: 'Cancel Order?',
+                text: 'Are you sure you want to cancel this order? This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading while processing
+                    Swal.fire({
+                        title: 'Cancelling Order...',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading()
+                    });
+
+                    // Call cancel endpoint (adjust to your actual API/handler)
+                    fetch('cancel_order.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'order_id=' + orderId
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Cancelled!', 'The order has been cancelled.', 'success')
+                                .then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to cancel the order.', 'error');
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire('Error', 'Network error. Please try again.', 'error');
+                    });
+                }
+            });
         }
+
     </script>
 </body>
 </html>

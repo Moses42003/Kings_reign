@@ -448,12 +448,14 @@ if (isset($_POST['submit'])) {
                     <label class="form-label" for="cpassword">Phone Number</label>
                     <input type="tel" id="pnum" name="pnum" class="form-input" 
                     placeholder="Enter Phone Number" required>
+                    <i class="fas fa-phone input-icon"></i>
                 </div>
                 
                 <div class="form-group full-width">
                     <label class="form-label" for="cpassword">Address</label>
                     <input type="address" id="address" name="address" class="form-input" 
                     placeholder="Enter Address" required>
+                    <i class="fas fa-house input-icon"></i>
                 </div>
 
                 <div class="form-group full-width">
