@@ -5,7 +5,7 @@
 // Get page title from parameter or use default
 $page_title = isset($page_title) ? $page_title : 'Admin Dashboard';
 $show_back_button = isset($show_back_button) ? $show_back_button : false;
-$back_url = isset($back_url) ? $back_url : 'dashboard_modern.php';
+$back_url = isset($back_url) ? $back_url : 'dashboard.php';
 $header_actions = isset($header_actions) ? $header_actions : '';
 ?>
 

@@ -8,17 +8,22 @@ if (!isset($_SESSION['admin_id'])) {
 
 include('../db.php');
 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Get dashboard statistics
 $totalUsers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM users"))['count'];
 $totalProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM products"))['count'];
 $totalOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM orders"))['count'];
 $totalRevenue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(total) as total FROM orders WHERE status = 'completed'"))['total'] ?? 0;
 $pendingOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM orders WHERE status = 'pending'"))['count'];
+$cancelledOrders = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM orders WHERE status = 'cancelled'"))['count'];
 $lowStockProducts = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM products WHERE stock <= 5"))['count'];
-
 // Get recent orders
 $recentOrders = mysqli_query($conn, "SELECT o.*, u.fname, u.lname, u.email FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC LIMIT 5");
-
+$totalMessages = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as count FROM contact_messages"))['count'];
 // Get recent messages
 $recentMessages = mysqli_query($conn, "SELECT * FROM contact_messages ORDER BY created_at DESC LIMIT 5");
 
@@ -31,7 +36,7 @@ $topProducts = mysqli_query($conn, "SELECT p.name, p.price, p.stock, COUNT(oi.id
                                    LIMIT 5");
 
 // Get category statistics
-$categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM products GROUP BY category ORDER BY count DESC");
+$categoryStats = mysqli_query($conn, "SELECT category_id, COUNT(*) as count FROM products GROUP BY category_id ORDER BY count DESC");
 ?>
 
 <!DOCTYPE html>
@@ -68,43 +73,49 @@ $categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM pr
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Main</div>
-                    <a href="dashboard_modern.php" class="nav-item active">
+                    <a href="dashboard.php" class="nav-item active">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
                     <a href="products.php" class="nav-item">
-                        <i class="fas fa-box"></i> Products
+                        <i class="fas fa-box"></i>All Products
                     </a>
                     <a href="orders.php" class="nav-item">
                         <i class="fas fa-shopping-bag"></i> Orders
                     </a>
-                    <a href="users.php" class="nav-item">
-                        <i class="fas fa-users"></i> Users
+
+                    <a href="categories.php" class="nav-item">
+                        <i class="fas fa-tags"></i> Categories
                     </a>
+
                 </div>
                 
                 <div class="nav-section">
                     <div class="nav-section-title">Management</div>
-                    <a href="categories.php" class="nav-item">
-                        <i class="fas fa-tags"></i> Categories
+                    <a href="users.php" class="nav-item">
+                        <i class="fas fa-users"></i> Users
                     </a>
-                    <a href="inventory.php" class="nav-item">
+
+                    <a href="admins.php" class="nav-item">
+                        <i class="fas fa-user-shield"></i> Admins
+                    </a>
+                    <!-- <a href="inventory.php" class="nav-item">
                         <i class="fas fa-warehouse"></i> Inventory
                     </a>
                     <a href="reports.php" class="nav-item">
                         <i class="fas fa-chart-bar"></i> Reports
-                    </a>
+                    </a> -->
                     <a href="messages.php" class="nav-item">
                         <i class="fas fa-envelope"></i> Messages
                     </a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">Settings</div>
-                    <a href="settings.php" class="nav-item">
+                    <div class="nav-section-title">Account</div>
+                    <!-- <a href="settings.php" class="nav-item">
                         <i class="fas fa-cog"></i> Settings
-                    </a>
-                    <a href="admins.php" class="nav-item">
-                        <i class="fas fa-user-shield"></i> Admins
+                    </a> -->
+                    <a href="#" class="nav-item <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-user-edit"></i> Profile
                     </a>
                     <a href="logout.php" class="nav-item">
                         <i class="fas fa-sign-out-alt"></i> Logout
@@ -184,6 +195,19 @@ $categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM pr
 
                     <div class="dashboard-card">
                         <div class="card-header">
+                            <span class="card-title">Cancelled Orders</span>
+                            <div class="card-icon danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <div class="card-value"><?php echo number_format($cancelledOrders); ?></div>
+                        <div class="card-change negative">
+                            <i class="fas fa-arrow-down"></i> -3% from last month
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
                             <span class="card-title">Pending Orders</span>
                             <div class="card-icon warning">
                                 <i class="fas fa-clock"></i>
@@ -207,30 +231,25 @@ $categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM pr
                             <i class="fas fa-arrow-up"></i> +2% from last month
                         </div>
                     </div>
-                </div>
 
-                <!-- Charts and Analytics -->
-                <div class="dashboard-sections">
-                    <div class="dashboard-section">
-                        <div class="section-header">
-                            <h2>Sales Analytics</h2>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <span class="card-title">Messages</span>
+                            <div class="card-icon danger">
+                                <i class="fas fa-envelope"></i>
+                            </div>
                         </div>
-                        <div class="chart-container">
-                            <canvas id="salesChart" width="400" height="200"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-section">
-                        <div class="section-header">
-                            <h2>Category Distribution</h2>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="categoryChart" width="400" height="200"></canvas>
+                        <div class="card-value"><?php echo number_format($totalMessages); ?></div>
+                        <div class="card-change negative">
+                            <i class="fas fa-arrow-down"></i> -3% from last month
                         </div>
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
+
+
+
+                                <!-- Recent Activity -->
                 <div class="dashboard-sections">
                     <div class="dashboard-section">
                         <div class="section-header">
@@ -299,6 +318,49 @@ $categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM pr
                     </div>
                 </div>
 
+
+
+
+
+                <!-- Charts and Analytics -->
+                <div class="dashboard-sections">
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Sales Analytics</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h2>Recent Messages</h2>
+                            <a href="messages.php" class="btn btn-outline btn-sm">View All</a>
+                        </div>
+                        
+                        <div class="messages-list">
+                            <?php while($message = mysqli_fetch_assoc($recentMessages)) { ?>
+                                <div class="message-card">
+                                    <div class="message-header">
+                                        <h4><?php echo htmlspecialchars($message['name']); ?></h4>
+                                        <span class="message-date"><?php echo date('M j, Y, h:i:s', strtotime($message['created_at'])); ?></span>
+                                    </div>
+                                    <p class="message-email"><?php echo htmlspecialchars($message['email']); ?></p>
+                                    <p class="message-content"><?php echo htmlspecialchars(substr($message['message'], 0, 100)) . (strlen($message['message']) > 100 ? '...' : ''); ?></p>
+                                    <?php if ($message['reply']) { ?>
+                                        <div class="message-reply">
+                                            <strong>Replied:</strong> <?php echo htmlspecialchars(substr($message['reply'], 0, 50)) . (strlen($message['reply']) > 50 ? '...' : ''); ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <!-- Quick Actions -->
                 <div class="quick-actions">
                     <h2>Quick Actions</h2>
@@ -311,28 +373,28 @@ $categoryStats = mysqli_query($conn, "SELECT category, COUNT(*) as count FROM pr
                             <p>Add new products to inventory</p>
                         </a>
                         
-                        <a href="orders.php?status=pending" class="action-card">
+                        <a href="users.php" class="action-card">
                             <div class="action-icon">
-                                <i class="fas fa-clock"></i>
+                                <i class="fas fa-users"></i>
                             </div>
-                            <h3>Process Orders</h3>
-                            <p>Handle pending orders</p>
+                            <h3>Manage Users</h3>
+                            <p>View and manage user accounts</p>
                         </a>
                         
-                        <a href="inventory.php" class="action-card">
+                        <a href="orders.php" class="action-card">
                             <div class="action-icon">
-                                <i class="fas fa-warehouse"></i>
+                                <i class="fas fa-shopping-bag"></i>
                             </div>
-                            <h3>Manage Inventory</h3>
-                            <p>Update stock levels</p>
+                            <h3>View Orders</h3>
+                            <p>Process and manage orders</p>
                         </a>
                         
-                        <a href="reports.php" class="action-card">
+                        <a href="messages.php" class="action-card">
                             <div class="action-icon">
-                                <i class="fas fa-chart-bar"></i>
+                                <i class="fas fa-envelope"></i>
                             </div>
-                            <h3>View Reports</h3>
-                            <p>Generate sales reports</p>
+                            <h3>Customer Support</h3>
+                            <p>Respond to customer messages</p>
                         </a>
                     </div>
                 </div>

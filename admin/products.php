@@ -154,7 +154,7 @@ $categories_result = $conn->query($categories_query);
 $page_title = 'Products';
 $page_description = 'Manage all products in the Kings Reign inventory';
 $show_back_button = true;
-$back_url = 'dashboard_modern.php';
+$back_url = 'dashboard.php';
 $header_actions = '
     <a href="add_product.php" class="btn btn-primary">
         <i class="fas fa-plus"></i> Add Product

@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 if (isset($_SESSION['admin_id'])) {
-    header('Location: admin/dashboard_modern.php');
+    header('Location: admin/dashboard.php');
     exit();
 }
 

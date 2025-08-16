@@ -466,8 +466,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $page_title = 'Add New Product';
 $page_description = 'Add new products to the Kings Reign inventory';
 $show_back_button = true;
-$back_url = 'dashboard_modern.php';
-$header_actions = '<a href="dashboard_modern.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>';
+$back_url = 'dashboard.php';
+$header_actions = '<a href="dashboard.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>';
 ?>
 
     <div class="admin-layout">

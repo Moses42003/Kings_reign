@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 if (isset($_SESSION['admin_id'])) {
-    header('Location: admin/dashboard_modern.php');
+    header('Location: admin/dashboard.php');
     exit();
 }
 
@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
                     $_SESSION['admin_id'] = $admin['id'];
                     $_SESSION['admin_email'] = $admin['email'];
                     $_SESSION['admin_name'] = isset($admin['name']) ? $admin['name'] : $admin['email'];
-                    header("Location: admin/dashboard_modern.php");
+                    header("Location: admin/dashboard.php");
                     exit();
                 } else {
                     $message = 'Invalid password!';

@@ -12,7 +12,7 @@ include('../db.php');
 $page_title = 'Example Page';
 $page_description = 'This is an example page showing how to use the reusable components';
 $show_back_button = true;
-$back_url = 'dashboard_modern.php';
+$back_url = 'dashboard.php';
 $header_actions = '<button class="btn btn-primary" onclick="exampleAction()"><i class="fas fa-plus"></i> Example Action</button>';
 
 // Custom CSS for this page

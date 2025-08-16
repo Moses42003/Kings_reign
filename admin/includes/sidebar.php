@@ -27,7 +27,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <nav class="sidebar-nav">
         <div class="nav-section">
             <div class="nav-section-title">Main</div>
-            <a href="dashboard_modern.php" class="nav-item <?php echo $current_page === 'dashboard_modern.php' ? 'active' : ''; ?>">
+            <a href="dashboard.php" class="nav-item <?php echo $current_page === 'dashboard.php' ? 'active' : ''; ?>">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
             <!-- <a href="add_product.php" class="nav-item <?php echo $current_page === 'add_product.php' ? 'active' : ''; ?>">
@@ -36,9 +36,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="products.php" class="nav-item <?php echo $current_page === 'products.php' ? 'active' : ''; ?>">
                 <i class="fas fa-box"></i> All Products
             </a>
-            <!-- <a href="edit_products.php" class="nav-item <?php echo $current_page === 'edit_products.php' ? 'active' : ''; ?>">
-                <i class="fas fa-edit"></i> Edit Products
-            </a> -->
+            <a href="orders.php" class="nav-item <?php echo $current_page === 'orders.php' ? 'active' : ''; ?>">
+                <i class="fas fa-shopping-bag"></i> Orders
+            </a>
             <a href="categories.php" class="nav-item <?php echo $current_page === 'categories.php' ? 'active' : ''; ?>">
                 <i class="fas fa-tags"></i> Categories
             </a>
@@ -52,18 +52,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="admins.php" class="nav-item <?php echo $current_page === 'admins.php' ? 'active' : ''; ?>">
                 <i class="fas fa-user-shield"></i> Admins
             </a>
-            <a href="orders.php" class="nav-item <?php echo $current_page === 'orders.php' ? 'active' : ''; ?>">
-                <i class="fas fa-shopping-bag"></i> Orders
-            </a>
+
             <a href="messages.php" class="nav-item <?php echo $current_page === 'messages.php' ? 'active' : ''; ?>">
                 <i class="fas fa-envelope"></i> Messages
             </a>
-            <a href="inventory.php" class="nav-item <?php echo $current_page === 'inventory.php' ? 'active' : ''; ?>">
-                <i class="fas fa-boxes"></i> Inventory
-            </a>
         </div>
         
-        <div class="nav-section">
+        <!-- <div class="nav-section">
             <div class="nav-section-title">Reports</div>
             <a href="reports.php" class="nav-item <?php echo $current_page === 'reports.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chart-bar"></i> Sales Reports
@@ -71,20 +66,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <a href="analytics.php" class="nav-item <?php echo $current_page === 'analytics.php' ? 'active' : ''; ?>">
                 <i class="fas fa-chart-line"></i> Analytics
             </a>
-        </div>
+        </div> -->
         
-        <div class="nav-section">
+        <!-- <div class="nav-section">
             <div class="nav-section-title">Settings</div>
             <a href="settings.php" class="nav-item <?php echo $current_page === 'settings.php' ? 'active' : ''; ?>">
                 <i class="fas fa-cog"></i> General Settings
             </a>
-            <a href="profile.php" class="nav-item <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>">
-                <i class="fas fa-user-edit"></i> Profile
-            </a>
-        </div>
+
+        </div> -->
         
         <div class="nav-section">
             <div class="nav-section-title">Account</div>
+            <a href="profile.php" class="nav-item <?php echo $current_page === 'profile.php' ? 'active' : ''; ?>">
+                <i class="fas fa-user-edit"></i> Profile
+            </a>
             <a href="logout.php" class="nav-item text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>

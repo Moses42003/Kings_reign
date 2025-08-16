@@ -69,26 +69,20 @@ $total_orders = $count_result->fetch_assoc()['total'];
 $total_pages = ceil($total_orders / $per_page);
 
 
+$page_title = 'Orders';
+$page_description = 'Manage Orders';
+$show_back_button = false;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Management - Kings Reign Admin</title>
+    <title><?php echo $page_title; ?> - - Kings Reign Admin</title>
     <link rel="stylesheet" href="../styles/modern_admin.css">
     <link rel="shortcut icon" href="../images/logos/logo-black.jpg" type="image/x-icon">
     <style>
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-        .admin-main {
-            flex: 1;
-        }
-        .admin-content {
-            padding: 2rem;
-        }
         .orders-container {
             background: #fff;
             border-radius: 12px;
@@ -255,14 +249,10 @@ $total_pages = ceil($total_orders / $per_page);
         <main class="admin-main">
             <?php include 'includes/header.php'; ?>
             
+
+            
             <div class="admin-content">
-                <div class="orders-container">
-                    <?php if($message): ?>
-                        <div class="alert alert-<?php echo $messageType; ?>">
-                            <i class="fas fa-<?php echo $messageType === 'success' ? 'check-circle' : 'exclamation-triangle'; ?>"></i>
-                            <?php echo htmlspecialchars($message); ?>
-                        </div>
-                    <?php endif; ?>
+
 
 
                     <!-- Filters Section -->
@@ -324,6 +314,15 @@ $total_pages = ceil($total_orders / $per_page);
                         </div>
                     </div>
 
+                <div class="orders-container">
+                    <?php if($message): ?>
+                        <div class="alert alert-<?php echo $messageType; ?>">
+                            <i class="fas fa-<?php echo $messageType === 'success' ? 'check-circle' : 'exclamation-triangle'; ?>"></i>
+                            <?php echo htmlspecialchars($message); ?>
+                        </div>
+                    <?php endif; ?>
+
+
 
 
                     <!-- Orders Table -->
@@ -335,7 +334,7 @@ $total_pages = ceil($total_orders / $per_page);
                                     <th>Customer</th>
                                     <th>Status</th>
                                     <th>Payment</th>
-                                    <th>Placed On</th>
+                                    <th>Ordered On</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -353,7 +352,7 @@ $total_pages = ceil($total_orders / $per_page);
                                         <td><?= htmlspecialchars($order['created_at']) ?></td>
                                         <td>
                                             <button class="btn btn-sm btn-primary me-2" onclick="viewOrderDetails(<?= $order['id'] ?>)">
-                                                <i class="fas fa-eye"></i> View
+                                                <i class="fas fa-eye"></i> View Details
                                             </button>
                                             <?php if ($order['status'] === 'pending'): ?>
                                                 <button class="btn btn-sm btn-danger" onclick="cancelOrder(<?= $order['id'] ?>)">
@@ -398,19 +397,30 @@ function clearFilters() {
 }
 
 function viewOrderDetails(orderId) {
+    // Show loading dialog
     Swal.fire({
         title: 'Loading...',
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading()
     });
 
-    fetch('get_order_details.php', {
+    fetch('./get_order_details.php', { // adjust path if needed
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'order_id=' + orderId
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'order_id=' + encodeURIComponent(orderId)
     })
-    .then(response => response.json())
+    .then(response => {
+        // If server returns error status
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+        }
+        return response.json().catch(() => {
+            throw new Error('Invalid JSON response from server');
+        });
+    })
     .then(data => {
+        console.log("Order Details Response:", data); // Debug
+
         if (!data.success) {
             Swal.fire('Error', data.message || 'Could not fetch order details.', 'error');
             return;
@@ -422,13 +432,16 @@ function viewOrderDetails(orderId) {
         let total = 0;
 
         items.forEach(item => {
-            const itemTotal = item.price * item.quantity;
+            const price = parseFloat(item.price) || 0;
+            const qty = parseInt(item.quantity) || 0;
+            const itemTotal = price * qty;
             total += itemTotal;
+
             itemsHtml += `
                 <tr>
                     <td>${item.product_name}</td>
-                    <td class="text-center">${item.quantity}</td>
-                    <td class="text-end">GH₵${item.price.toFixed(2)}</td>
+                    <td class="text-center">${qty}</td>
+                    <td class="text-end">GH₵${price.toFixed(2)}</td>
                     <td class="text-end">GH₵${itemTotal.toFixed(2)}</td>
                 </tr>`;
         });
@@ -439,7 +452,7 @@ function viewOrderDetails(orderId) {
                 <div class="text-start">
                     <p><strong>Status:</strong> ${order.status}</p>
                     <p><strong>Placed on:</strong> ${order.created_at}</p>
-                    <p><strong>Shipping Address:</strong> <br> ${order.shipping_address}</p>
+                    <p><strong>Shipping Address:</strong><br>${order.shipping_address}</p>
                     <p><strong>Payment Method:</strong> ${order.payment_method}</p>
                     <hr>
                     <table class="table table-sm">
@@ -467,7 +480,10 @@ function viewOrderDetails(orderId) {
             customClass: { popup: 'swal2-order-details' }
         });
     })
-    .catch(() => Swal.fire('Error', 'Network error. Please try again.', 'error'));
+    .catch(err => {
+        console.error("Fetch failed:", err);
+        Swal.fire('Error', err.message || 'Network error. Please try again.', 'error');
+    });
 }
 
 function cancelOrder(orderId) {
@@ -500,6 +516,90 @@ function cancelOrder(orderId) {
         }
     });
 }
+
 </script>
+
+
+
+    <!-- <script>
+        function viewOrderDetails(orderId) {
+            Swal.fire({
+                title: 'Loading...',
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+            fetch('get_order_details.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'order_id=' + orderId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    Swal.fire('Error', data.message || 'Could not fetch order details.', 'error');
+                    return;
+                }
+                const order = data.order;
+                const items = data.items;
+                let itemsHtml = '';
+                let total = 0;
+                items.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    itemsHtml += `
+                        <tr>
+                            <td style="padding:8px 12px;">${item.product_name}</td>
+                            <td style="padding:8px 12px; text-align:center;">${item.quantity}</td>
+                            <td style="padding:8px 12px; text-align:right;">GH ₵${parseFloat(item.price).toFixed(2)}</td>
+                            <td style="padding:8px 12px; text-align:right;">GH ₵${itemTotal.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                Swal.fire({
+                    title: `Order #${order.id}`,
+                    html: `
+                        <div style="text-align:left;">
+                            <p><strong>Status:</strong> ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
+                            <p><strong>Placed on:</strong> ${order.created_at}</p>
+                            <p><strong>Shipping Address( You can change this in your account settings):</strong> <br/> ${order.shipping_address}</p>
+                            <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+                            <hr/>
+                            <table style="width:100%;border-collapse:collapse;font-size:0.98em;">
+                                <thead>
+                                    <tr style="background:#f3f4f6;">
+                                        <th style="padding:8px 12px;text-align:left;">Product</th>
+                                        <th style="padding:8px 12px;text-align:center;">Qty</th>
+                                        <th style="padding:8px 12px;text-align:right;">Price</th>
+                                        <th style="padding:8px 12px;text-align:right;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${itemsHtml}
+                                </tbody>
+                                <tfoot>
+                                    <tr style="font-weight:bold;">
+                                        <td colspan="3" style="padding:8px 12px;text-align:right;">Grand Total:</td>
+                                        <td style="padding:8px 12px;text-align:right;">GH ₵${total.toFixed(2)}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    `,
+                    width: 700,
+                    showCloseButton: true,
+                    confirmButtonText: 'Close',
+                    customClass: { popup: 'swal2-order-details' }
+                });
+            })
+            .catch(() => {
+                Swal.fire('Error', 'Network error. Please try again.', 'error');
+            });
+        }
+
+</script> -->
+
+
+
+
 </body>
 </html>

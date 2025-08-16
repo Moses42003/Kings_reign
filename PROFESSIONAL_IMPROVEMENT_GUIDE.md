@@ -35,7 +35,7 @@ This guide provides a comprehensive plan to transform your Kings Reign e-commerc
 - **Account Management:** User profile section
 - **Shopping Cart:** Modal-based cart with real-time updates
 
-### 2. Professional Admin Dashboard (`admin/dashboard_modern.php`)
+### 2. Professional Admin Dashboard (`admin/dashboard.php`)
 - **Statistics Cards:** Real-time dashboard metrics
 - **Recent Activity:** Latest orders and messages
 - **Quick Actions:** Easy access to common tasks
