@@ -171,7 +171,7 @@ $result = mysqli_query($conn, $pquery);
                 if ($outOfStock) {
                     echo '<span class="out-of-stock">Out of Stock</span>';
                 }
-                echo '<img src="'. $row['file_path'] .'" alt="'. $row['name'] .'">
+                echo '<img src="'. $row['file_path'] .'" alt="'. $row['name'] .'" width="100%" height="100%">
                 <div class="product-info">
                 <p class="product-name">'. $row['name'] .'</p>
                 <p class="product-price">GH '. $row['price'] .'</p>';
@@ -424,7 +424,7 @@ document.getElementById('contactForm').onsubmit = function(e) {
     .then(data => {
         if (data.success) {
             status.textContent = 'Message sent!';
-            form.reset();
+            form.reset();z
             // If user_messages list is present, reload it
             if (typeof reloadUserMessages === 'function') reloadUserMessages();
             else if (window.parent && window.parent.reloadUserMessages) window.parent.reloadUserMessages();

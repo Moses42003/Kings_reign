@@ -278,6 +278,7 @@ function getCategoryIcon($category) {
         }
 
         .category-nav {
+            /* position: fixed; */
             background: white;
             border-radius: 16px;
             padding: 1.5rem;
@@ -644,7 +645,6 @@ function getCategoryIcon($category) {
             .main-container {
                 flex-direction: column;
             }
-            
             .sidebar {
                 width: 100%;
             }
@@ -1013,7 +1013,7 @@ function getCategoryIcon($category) {
                     <?php while($product = mysqli_fetch_assoc($flash_sale_products)) { ?>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="<?php echo $product['main_image']; ?>" alt="<?php echo $product['name']; ?>">
+                                <img src="<?php echo $product['main_image']; ?>" alt="<?php echo $product['name']; ?>" width="90%" height="100%">
                                 <span class="discount-badge">-<?php echo $product['discount_percentage']; ?>%</span>
                             </div>
                             <div class="product-info">
@@ -1084,7 +1084,7 @@ function getCategoryIcon($category) {
                     <?php while($product = mysqli_fetch_assoc($all_products)) { ?>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="<?php echo $product['main_image']; ?>" alt="<?php echo $product['name']; ?>">
+                                <img src="<?php echo $product['main_image']; ?>" alt="<?php echo $product['name']; ?>" width="100%" height="100%">
                                 <?php if($product['discount_percentage'] > 0) { ?>
                                     <span class="discount-badge">-<?php echo $product['discount_percentage']; ?>%</span>
                                 <?php } ?>

@@ -265,7 +265,7 @@ section .new h3{
     height: 120px;
     object-fit: contain;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 10px
 }
 .product-info {
     width: 100%;
